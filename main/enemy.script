@@ -1,0 +1,79 @@
+local function update_path(self, dt)
+	local wp_id = self.waypoints[self.current_wp]
+
+	if not wp_id or not go.exists(wp_id) then
+		self.state = "CHASE"
+		return
+	end
+
+	local target = go.get_position(wp_id)
+	local pos = go.get_position()
+
+	local dir = target - pos
+	dir.z = 0
+
+	if vmath.length(dir) < 5 then
+		self.current_wp = self.current_wp + 1
+	else
+		dir = vmath.normalize(dir)
+		go.set_position(pos + dir * self.speed * dt)
+	end
+end
+
+local function update_chase(self, dt)
+	if not self.player or not go.exists(self.player) then
+		return
+	end
+
+	local enemy_pos = go.get_position()
+	local player_pos = go.get_position(self.player)
+
+	local dir = player_pos - enemy_pos
+	dir.z = 0
+
+	if vmath.length_sqr(dir) > 0 then
+		dir = vmath.normalize(dir)
+		go.set_position(enemy_pos + dir * self.speed * dt)
+	end
+end
+
+local function die(self)
+	go.delete()
+end
+
+function init(self)
+	self.speed = 80
+
+	self.max_health = 3
+	self.health = self.max_health
+
+	self.player = go.get_id("player")
+	self.state = "PATH"
+	self.waypoints = {
+		go.get_id("wp_1"),
+		go.get_id("wp_2"),
+		go.get_id("wp_3"),
+	}
+
+	self.current_wp = 1
+end
+
+function update(self, dt)
+	if self.state == "PATH" then
+		update_path(self, dt)
+
+	elseif self.state == "CHASE" then
+		update_chase(self, dt)
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("damage") then
+		self.health = self.health - message.amount
+		print("Enemy HP:", self.health)
+
+		if self.health <= 0 then
+			die(self)
+		end
+	end
+end

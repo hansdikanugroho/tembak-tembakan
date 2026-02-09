@@ -1,0 +1,29 @@
+function init(self)
+	self.speed = 600
+	self.damage = 1
+
+	self.direction = self.direction or vmath.vector3(0, 1, 0)
+
+	timer.delay(3, false, function()
+		if go.exists() then
+			go.delete()
+		end
+	end)
+end
+
+function update(self, dt)
+	local pos = go.get_position()
+	pos = pos + self.direction * self.speed * dt
+	go.set_position(pos)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("collision_response") then
+		if message.group == hash("enemy") then
+			msg.post(message.other_id, "damage", {
+				amount = self.damage
+			})
+			go.delete()
+		end
+	end
+end

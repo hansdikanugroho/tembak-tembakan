@@ -1,0 +1,145 @@
+name: "default"
+instances {
+  id: "enemy"
+  prototype: "/main/enemy.go"
+  position {
+    x: 630.0
+    y: 582.0
+    z: 4.0
+  }
+  rotation {
+    x: -1.0
+    w: 6.123234E-17
+  }
+  scale3 {
+    x: 0.522685
+    y: 0.49695
+  }
+}
+scale_along_z: 0
+embedded_instances {
+  id: "player"
+  data: "components {\n"
+  "  id: \"spaceship\"\n"
+  "  component: \"/main/spaceship.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"spaceship\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/sprites.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collisionobject\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"type: COLLISION_OBJECT_TYPE_KINEMATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"player\\\"\\n"
+  "mask: \\\"enemy\\\"\\n"
+  "embedded_collision_shape {\\n"
+  "  shapes {\\n"
+  "    shape_type: TYPE_BOX\\n"
+  "    position {\\n"
+  "      x: -2.0\\n"
+  "      y: 4.0\\n"
+  "    }\\n"
+  "    rotation {\\n"
+  "    }\\n"
+  "    index: 0\\n"
+  "    count: 3\\n"
+  "  }\\n"
+  "  data: 73.59128\\n"
+  "  data: 50.0593\\n"
+  "  data: 11.12\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"bullet_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/main/bullet.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 638.0
+    y: 147.0
+    z: 2.0
+  }
+}
+embedded_instances {
+  id: "background"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"bg\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/sprites.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 640.0\n"
+  "    y: 360.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    z: 1.0
+  }
+  scale3 {
+    x: 1.983415
+    y: 2.082927
+  }
+}
+embedded_instances {
+  id: "wp1"
+  data: ""
+  position {
+    x: 638.0
+    y: 291.0
+  }
+  rotation {
+    x: 8.034254E-18
+    y: 8.034254E-18
+    z: -0.7696615
+    w: 0.6384522
+  }
+  scale3 {
+    x: 1.128
+    y: 2.232476
+    z: 1.128
+  }
+}
+embedded_instances {
+  id: "camera"
+  data: "embedded_components {\n"
+  "  id: \"camera\"\n"
+  "  type: \"camera\"\n"
+  "  data: \"aspect_ratio: 1.0\\n"
+  "fov: 0.7854\\n"
+  "near_z: -1.0\\n"
+  "far_z: 1.0\\n"
+  "orthographic_projection: 1\\n"
+  "orthographic_mode: ORTHO_MODE_AUTO_COVER\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 644.0
+    y: 562.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "go"
+  data: ""
+}
